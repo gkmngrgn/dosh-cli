@@ -1,0 +1,58 @@
+repos:
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: 'v4.4.0'
+    hooks:
+      - id: trailing-whitespace
+      - id: end-of-file-fixer
+      - id: check-yaml
+      - id: check-toml
+      - id: check-added-large-files
+      - id: check-docstring-first
+
+  - repo: https://github.com/Lucas-C/pre-commit-hooks
+    rev: "v1.4.2"
+    hooks:
+      - id: forbid-crlf
+      - id: remove-crlf
+
+  - repo: https://github.com/jumanjihouse/pre-commit-hooks
+    rev: "3.0.0"
+    hooks:
+      - id: shellcheck
+
+  - repo: https://github.com/pycqa/pydocstyle
+    rev: "6.3.0"
+    hooks:
+      - id: pydocstyle
+        language: python
+        exclude: ^tests/
+        additional_dependencies: ["toml"]
+
+  - repo: https://github.com/pycqa/isort
+    rev: "5.12.0"
+    hooks:
+      - id: isort
+        args: ["--profile", "black"]
+
+  - repo: https://github.com/psf/black
+    rev: "23.1.0"
+    hooks:
+      - id: black
+
+  - repo: https://github.com/pre-commit/mirrors-mypy
+    rev: "v1.0.1"
+    hooks:
+      - id: mypy
+        args: ["--strict", "--ignore-missing-imports"]
+        exclude: ^tests/
+
+  - repo: local
+    hooks:
+      - id: pylint
+        name: pylint
+        entry: poetry run pylint
+        language: system
+        types: [python]
+        args: ["--extension-pkg-allow-list=lupa", "--disable=line-too-long"]
+        require_serial: true
+        exclude: ^tests/
