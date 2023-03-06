@@ -7,9 +7,21 @@ readme = "README.md"
 license = "MIT"
 packages = [{include = "dosh_cli"}]
 
-[tool.poetry.dependencies]
-python = "^3.10"
+[tool.poetry.scripts]
+dosh = "dosh_cli.main:run"
 
+[tool.poetry.dependencies]
+python = ">=3.9,<3.12"
+dosh-core = "^0.2.0"
+
+[tool.poetry.group.dev.dependencies]
+pylint = "^2.16.4"
+nuitka = "^1.4.8"
+ordered-set = "^4.1.0"
+
+[tool.poe.tasks.lint]
+cmd = "pre-commit run --all-files"
+help = "Check code quality"
 
 [build-system]
 requires = ["poetry-core"]

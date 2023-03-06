@@ -1,4 +1,4 @@
-"""DOSH CLI app."""
+"""DOSH main module."""
 import sys
 from enum import Enum
 from pathlib import Path
@@ -131,5 +131,11 @@ class CLI:  # pylint: disable=too-few-public-methods
             self.conf_parser.run_task(task_name, task_params)
 
 
-if __name__ == "__main__":
+def run() -> None:
+    """Run CLI."""
     CLI().run()
+
+
+if __name__ == "__main__":
+    # required for nuitka
+    run()
