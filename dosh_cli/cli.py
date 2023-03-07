@@ -4,11 +4,13 @@ from enum import Enum
 from pathlib import Path
 from typing import List, Optional, Tuple
 
-from dosh_core import DoshInitializer, __version__
+from dosh_core import DoshInitializer
 from dosh_core.commands.internal import generate_help, init_config
 from dosh_core.config import ConfigParser
 from dosh_core.environments import ENVIRONMENTS
 from dosh_core.logger import get_logger, set_verbosity
+
+from dosh_cli import __version__
 
 logger = get_logger()
 
@@ -131,11 +133,6 @@ class CLI:  # pylint: disable=too-few-public-methods
             self.conf_parser.run_task(task_name, task_params)
 
 
-def run() -> None:
+def run_cli() -> None:
     """Run CLI."""
     CLI().run()
-
-
-if __name__ == "__main__":
-    # required for nuitka
-    run()
