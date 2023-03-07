@@ -7,9 +7,36 @@ readme = "README.md"
 license = "MIT"
 packages = [{include = "dosh_cli"}]
 
-[tool.poetry.dependencies]
-python = "^3.10"
+[tool.poetry.scripts]
+dosh = "dosh_cli.cli:run_cli"
 
+[tool.poetry.dependencies]
+python = ">=3.9,<3.12"
+dosh-core = "^0.2.0"
+
+[tool.poetry.group.dev.dependencies]
+pylint = "^2.16.4"
+nuitka = "^1.4.8"
+ordered-set = "^4.1.0"
+pytest = "^7.2.2"
+pytest-cov = "^4.0.0"
+
+[tool.poe.tasks.lint]
+cmd = "pre-commit run --all-files"
+help = "Check code quality"
+
+[tool.poe.tasks.test]
+cmd = "pytest --no-cov -k $name"
+help = "Run tests"
+
+[[tool.poe.tasks.test.args]]
+name = "name"
+positional = true
+default = "test"
+help = "Filter tests by $name"
+
+[tool.pytest.ini_options]
+addopts = "--cov=dosh_cli --cov-report term-missing --cov-report html:./tests/cov_html"
 
 [build-system]
 requires = ["poetry-core"]
