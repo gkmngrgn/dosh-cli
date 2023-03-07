@@ -22,9 +22,9 @@ echo "DIRECTORY     : ${DIR_NAME}"
 echo "---"
 
 poetry install --no-ansi --no-interaction
-yes | poetry run python                  \
-             -m nuitka dosh_cli/main.py  \
-             --standalone                \
+yes | poetry run python             \
+             -m nuitka dosh_cli     \
+             --standalone           \
              --output-filename=dosh
 rm -rf "${DIR_NAME}" "${DIR_NAME}.tar.gz"
 mv main.dist "${DIR_NAME}"
