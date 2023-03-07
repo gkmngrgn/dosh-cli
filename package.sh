@@ -27,5 +27,5 @@ yes | poetry run python             \
              --standalone           \
              --output-filename=dosh
 rm -rf "${DIR_NAME}" "${DIR_NAME}.tar.gz"
-mv main.dist "${DIR_NAME}"
+mv dosh_cli.dist "${DIR_NAME}"
 tar -czvf "${DIR_NAME}.tar.gz" "${DIR_NAME}/"*
