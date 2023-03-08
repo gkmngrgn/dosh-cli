@@ -1,8 +1,8 @@
 version: 2.1
 
 orbs:
-  windows: circleci/windows@5.0.0
   python: circleci/python@2.1.1
+  windows: circleci/windows@5.0.0
 
 filters-release: &filters-release
   branches:
@@ -87,12 +87,12 @@ jobs:
 
       - run:
           name: "Build project"
-          command: bash package.sh
+          command: bash build_with_nuitka.sh
 
       - persist_to_workspace:
           root: "."
           paths:
-            - "dosh-*.tar.gz"
+            - "dosh-cli-linux-*"
 
   build-on-macos:
     macos:
@@ -110,12 +110,12 @@ jobs:
 
       - run:
           name: "Build project"
-          command: bash package.sh
+          command: bash build_with_nuitka.sh
 
       - persist_to_workspace:
           root: "."
           paths:
-            - "dosh-*.tar.gz"
+            - "dosh-cli-darwin-*"
 
   build-on-windows:
     executor: windows/server-2022
@@ -125,20 +125,26 @@ jobs:
 
       - run:
           name: "Build project"
-          command: bash package.sh
+          command: bash build_with_nuitka.sh
 
       - persist_to_workspace:
           root: "."
           paths:
-            - "dosh-*.tar.gz"
+            - "dosh-cli-windows-*"
 
   release:
     docker:
-      - image: cimg/base:2022.08
+      - image: cimg/base:stable
 
     steps:
       - attach_workspace:
           at: .
+
+      - run:
+          name: "Archive"
+          command: |
+            for i in dosh-cli-*/; do zip -0 -r "${i%/}.zip" "$i" & done; wait
+            find . -name "dosh-cli-*" -type d -exec rm -r "{}" \;
 
       - store_artifacts:
           path: .
