@@ -2,9 +2,7 @@
 
 [![CircleCI](https://dl.circleci.com/status-badge/img/gh/gkmngrgn/dosh-cli/tree/main.svg?style=svg)](https://dl.circleci.com/status-badge/redirect/gh/gkmngrgn/dosh-cli/tree/main)
 
-**DOSH-CLI** is a command-line interface of **DOSH** to run your tasks on any platform, on any shell.
-Define your tasks, aliases, environments in a `dosh.lua` file and run `dosh`.
-DOSH will work like a CLI app reading your config file.
+**DOSH-CLI** is a command-line interface of **DOSH** to run your tasks on any platform, on any shell. Define your tasks, aliases, environments in a `dosh.lua` file and run `dosh`. DOSH will work like a CLI app reading your config file.
 
 <img src="https://media.githubusercontent.com/media/gkmngrgn/dosh-core/main/files/dosh-logo.png" width=200 />
 
@@ -28,9 +26,9 @@ iwr -useb https://raw.githubusercontent.com/gkmngrgn/dosh-installer/main/install
 ## ANATOMY OF `dosh.lua`
 
 ```lua
-local name = "there"                         -- you can use all features of Lua programming language.
+local name = "there"                          -- you can use all features of Lua programming language.
 
-local function hello(there)                  -- even you can define your custom functions.
+local function hello(there)                   -- even you can define your custom functions.
 there = there or name
 local message = "Hello, " .. there .. "!"
 cmd.run("osascript -e 'display notification \"" .. message .. "\" with title \"Hi!\"'")
@@ -60,10 +58,7 @@ Take a look at the [`examples`](./examples) folder to find ready-in-use config f
 
 #### HELP OUTPUT
 
-Help outputs consist of four parts: **description**, **tasks**, **commands**, and **epilog**.
-The tasks will be generated getting task names and descriptions from your config file.
-The commands are including pre-defined dosh tasks and common task parameters.
-All help outputs start with a description and ends with an epilog if you have.
+Help outputs consist of four parts: **description**, **tasks**, **commands**, and **epilog**. The tasks will be generated getting task names and descriptions from your config file. The commands are including pre-defined dosh tasks and common task parameters. All help outputs start with a description and ends with an epilog if you have.
 
 If you want to edit the default description and add an epilog to the help output, you can modify these variables:
 
@@ -111,8 +106,7 @@ It's like OS type checking. It's useful if you use shell-specific package like `
 
 #### DOSH-SPECIFIC ENVIRONMENTS
 
-Consider you have some tasks that help you to test the project on your local and you want to restrict the task to prevent running it on the server by mistake.
-So the method `cmd.add_task` has an `environments` parameter and you can set your environment name for each target.
+Consider you have some tasks that help you to test the project on your local and you want to restrict the task to prevent running it on the server by mistake. So the method `cmd.add_task` has an `environments` parameter and you can set your environment name for each target.
 
 - `DOSH_ENV` (define it on your `~/.profile` file or CI/CD service)
 
@@ -123,25 +117,21 @@ _Check out the file [`dosh_environments.lua`](./examples/dosh_environments.lua) 
 
 #### GENERAL PURPOSE
 
-The main purpose of dosh to write one script that works on multiple operating systems and different shells.
-But it has to have a limit and it's nonsense to define functions for each cli command.
-So if you want to run a cli app (like `exa`, `bat`, `helix`, etc.), then you can use `cmd.run` for it.
+The main purpose of dosh to write one script that works on multiple operating systems and different shells. But it has to have a limit and it's nonsense to define functions for each cli command. So if you want to run a cli app (like `exa`, `bat`, `helix`, etc.), then you can use `cmd.run` for it.
 
 _Check out the file [`dosh_greet.lua`](./examples/dosh_greet.lua) for example usage._
 
 
 #### FILE SYSTEM OPERATIONS
 
-There are some ready-made functions both to keep the code readable and to make it work the same in all operating systems.
-You know Windows prefers backslash as a path separator but with dosh, use always `/` as in `/foo/bar/baz`, let dosh to find the path in a common way.
+There are some ready-made functions both to keep the code readable and to make it work the same in all operating systems. You know Windows prefers backslash as a path separator but with dosh, use always `/` as in `/foo/bar/baz`, let dosh to find the path in a common way.
 
 _Check out the file [`dosh_config.lua`](./examples/dosh_config.lua) for example usage._
 
 
 #### PACKAGE MANAGERS
 
-There are many package managers and I'm not sure if we need to implement all of them.
-But at least dosh supports these three of them mostly:
+There are many package managers and I'm not sure if we need to implement all of them. But at least dosh supports these three of them mostly:
 
 - `cmd.brew_install` (for MacOS and Linux)
 - `packages`: list of strings, required.
@@ -226,5 +216,5 @@ CONFIGURED TASKS
 build          Build dosh with nuitka
 lint           Check code quality
 test           Run tests
-name         Filter tests by $name
+  name         Filter tests by $name
 ```
