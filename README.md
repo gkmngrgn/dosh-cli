@@ -213,8 +213,7 @@ $ poetry poe --help
 [...]
 
 CONFIGURED TASKS
-build          Build dosh with nuitka
-lint           Check code quality
-test           Run tests
-  name         Filter tests by $name
+  lint           Check code quality
+  test           Run tests
+    name         Filter tests by $name
 ```
