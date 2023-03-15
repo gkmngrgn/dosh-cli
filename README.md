@@ -2,9 +2,11 @@
 
 [![CircleCI](https://dl.circleci.com/status-badge/img/gh/gkmngrgn/dosh-cli/tree/main.svg?style=svg)](https://dl.circleci.com/status-badge/redirect/gh/gkmngrgn/dosh-cli/tree/main)
 
-**DOSH-CLI** is a command-line interface of **DOSH** to run your tasks on any platform, on any shell. Define your tasks, aliases, environments in a `dosh.lua` file and run `dosh`. DOSH will work like a CLI app reading your config file.
+**DOSH-CLI** is a command-line interface of [**DOSH-CORE**](https://github.com/gkmngrgn/dosh-core) to run your tasks on any platform, on any shell. Define your tasks, aliases, environments in a `dosh.lua` file and run `dosh`. DOSH will work like a CLI app reading your config file.
 
-<img src="https://media.githubusercontent.com/media/gkmngrgn/dosh-core/main/files/dosh-logo.png" width=200 />
+<img src="https://media.githubusercontent.com/media/gkmngrgn/dosh-core/main/dosh-logo.svg"
+     width="200"
+     alt="DOSH logo" />
 
 
 ## INSTALLATION
