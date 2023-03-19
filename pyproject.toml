@@ -1,11 +1,21 @@
 [tool.poetry]
 name = "dosh-cli"
 version = "0.1.0"
-description = ""
+description = "Command line interface of DOSH, a tool for managing your tasks."
 authors = ["Gökmen Görgen <gkmngrgn@gmail.com>"]
 readme = "README.md"
 license = "MIT"
 packages = [{include = "dosh_cli"}]
+classifiers = [
+    "Environment :: Console",
+    "Intended Audience :: Developers",
+    "Intended Audience :: System Administrators",
+    "Natural Language :: English",
+    "Operating System :: MacOS",
+    "Operating System :: Microsoft",
+    "Operating System :: POSIX :: Linux",
+    "Topic :: Software Development :: Build Tools",
+]
 
 [tool.poetry.scripts]
 dosh = "dosh_cli.cli:run_cli"
