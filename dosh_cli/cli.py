@@ -87,20 +87,21 @@ class CLI:  # pylint: disable=too-few-public-methods
     def __init__(self) -> None:
         """Initialize cli with config parser."""
         self.arg_parser = ArgumentParser()
+        self.dosh_initializer = DoshInitializer()
 
         # update dosh initializer settings by cli arguments
         base_directory = self.arg_parser.get_current_working_directory()
         if base_directory is not None:
-            DoshInitializer.base_directory = base_directory
+            self.dosh_initializer.base_directory = base_directory
 
         config_path = self.arg_parser.get_config_path()
         if config_path is not None:
-            DoshInitializer.config_path = config_path
+            self.dosh_initializer.config_path = config_path
 
         # define config parser
         content = (
-            DoshInitializer.config_path.read_text(encoding="utf-8")
-            if DoshInitializer.config_path.exists()
+            self.dosh_initializer.config_path.read_text(encoding="utf-8")
+            if self.dosh_initializer.config_path.exists()
             else ""
         )
         self.conf_parser = ConfigParser(content)
@@ -120,7 +121,7 @@ class CLI:  # pylint: disable=too-few-public-methods
             )
             print(output)
         elif task_name == PredefinedTask.INIT:
-            init_config(DoshInitializer.config_path)
+            init_config(self.dosh_initializer.config_path)
         elif task_name == PredefinedTask.VERSION:
             print(__version__)
         else:
