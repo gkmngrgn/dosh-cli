@@ -15,6 +15,16 @@ aliases:
       branches:
         ignore: main
 
+commands:
+  add-symlinks-for-python:
+    steps:
+      - run:
+          name: "Add symlinks for python and pip"
+          command: |
+            mkdir -p ~/.local/bin
+            ln -s $(which python3) ~/.local/bin/python
+            ln -s $(which pip3) ~/.local/bin/pip
+
 jobs:
   lint:
     executor:
@@ -66,6 +76,7 @@ jobs:
 
     steps:
       - checkout
+      - add-symlinks-for-python
       - run:
           name: "Install dependencies"
           command: |
@@ -85,12 +96,7 @@ jobs:
 
     steps:
       - checkout
-      - run:
-          name: "Add symlinks for python and pip"
-          command: |
-            mkdir -p ~/.local/bin
-            ln -s $(which python3) ~/.local/bin/python
-            ln -s $(which pip3) ~/.local/bin/pip
+      - add-symlinks-for-python
       - run:
           name: "Build project"
           command: ./build_with_nuitka.sh
