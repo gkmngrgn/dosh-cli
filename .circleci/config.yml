@@ -1,8 +1,8 @@
 version: 2.1
 
 orbs:
-  python: circleci/python@2.1.1
-  windows: circleci/windows@5.0.0
+  python: circleci/python@2
+  windows: circleci/windows@5
 
 aliases:
   - python-tag: &python-tag "3.10"
@@ -14,22 +14,6 @@ aliases:
   - filters-development: &filters-development
       branches:
         ignore: main
-
-commands:
-  build-on-linux:
-    description: "Build project on Linux"
-    steps:
-      - checkout
-      - run:
-          name: "Install dependencies"
-          command: apt-get update && apt-get install -y patchelf
-      - run:
-          name: "Build project"
-          command: ./build_with_nuitka.sh
-      - persist_to_workspace:
-          root: "."
-          paths:
-            - "dosh-cli-linux-*"
 
 jobs:
   lint:
@@ -70,21 +54,30 @@ jobs:
           name: "Check lua files"
           command: luacheck --globals=cmd --globals=env -- examples
 
-  build-on-linux-x86_64:
-    docker:
-      - image: python:3.10-bullseye
+  build-on-linux:
+    parameters:
+      resource_class:
+        type: string
 
-    steps:
-      - build-on-linux
-
-  build-on-linux-arm64:
     machine:
       image: ubuntu-2204:current
 
-    resource_class: arm.medium
+    resource_class: << parameters.resource_class >>
 
     steps:
-      - build-on-linux
+      - checkout
+      - run:
+          name: "Install dependencies"
+          command: |
+            sudo apt-get update
+            sudo apt-get install -y patchelf
+      - run:
+          name: "Build project"
+          command: ./build_with_nuitka.sh
+      - persist_to_workspace:
+          root: "."
+          paths:
+            - "dosh-cli-linux-*"
 
   build-on-macos:
     macos:
@@ -151,7 +144,11 @@ workflows:
 
   main:
     jobs:
-      - build-on-linux-x86_64:
+      - build-on-linux:
+          name: build-on-linux-<< matrix.resource_class >>
+          matrix:
+            parameters:
+              resource_class: ["medium", "arm.medium"]
           filters: *filters-release
       - build-on-linux-arm64:
           filters: *filters-release
@@ -161,8 +158,8 @@ workflows:
           filters: *filters-release
       - release:
           requires:
-            - build-on-linux-x86_64
-            - build-on-linux-arm64
+            - build-on-linux-medium
+            - build-on-linux-arm.medium
             - build-on-macos
             - build-on-windows
           filters: *filters-release
