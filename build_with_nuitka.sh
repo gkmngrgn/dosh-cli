@@ -30,6 +30,7 @@ poetry run python                  \
         --remove-output            \
         --assume-yes-for-downloads \
         --output-filename=dosh     \
+        --static-libpython=no      \
         dosh_cli
 [ -d "${DIR_NAME}" ] && rm -rf "${DIR_NAME}"
 mv dosh_cli.dist "${DIR_NAME}"
