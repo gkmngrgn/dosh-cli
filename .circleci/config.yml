@@ -4,21 +4,22 @@ orbs:
   python: circleci/python@2.1.1
   windows: circleci/windows@5.0.0
 
-filters-release: &filters-release
-  branches:
-    only: main
-  tags:
-    only: /^v\d+\.\d+\.\d+$/
-
-filters-development: &filters-development
-  branches:
-    ignore: main
+aliases:
+  - python-tag: &python-tag "3.10"
+  - filters-release: &filters-release
+      branches:
+        only: main
+      tags:
+        only: /^v\d+\.\d+\.\d+$/
+  - filters-development: &filters-development
+      branches:
+        ignore: main
 
 jobs:
   lint:
     executor:
       name: "python/default"
-      tag: "3.9"
+      tag: *python-tag
 
     steps:
       - checkout
@@ -56,27 +57,10 @@ jobs:
           name: "Check lua files"
           command: luacheck --globals=cmd --globals=env -- examples
 
-  test:
-    parameters:
-      version:
-        type: string
-
+  build-on-linux:
     executor:
       name: "python/default"
-      tag: << parameters.version >>
-
-    steps:
-      - checkout
-
-      - python/install-packages:
-          pkg-manager: "poetry"
-          args: "--no-ansi"
-
-      - run: poetry run pytest
-
-  build-on-linux:
-    docker:
-      - image: python:3.9-bullseye
+      tag: *python-tag
 
     steps:
       - checkout
@@ -159,7 +143,9 @@ workflows:
       - lint-lua:
           filters: *filters-development
 
-      - test:
+      - python/test:
+          pkg-manager: poetry
+          test-tool: pytest
           matrix:
             parameters:
               version: ["3.8", "3.9", "3.10", "3.11"]

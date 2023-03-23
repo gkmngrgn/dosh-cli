@@ -26,7 +26,7 @@ dosh-core = "^0.3.0"
 
 [tool.poetry.group.dev.dependencies]
 pylint = "^2.16.4"
-nuitka = "^1.4.8"
+nuitka = "^1.5.3"
 ordered-set = "^4.1.0"
 pytest = "^7.2.2"
 pytest-cov = "^4.0.0"
