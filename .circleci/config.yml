@@ -15,6 +15,22 @@ aliases:
       branches:
         ignore: main
 
+commands:
+  build-on-linux:
+    description: "Build project on Linux"
+    steps:
+      - checkout
+      - run:
+          name: "Install dependencies"
+          command: apt-get update && apt-get install -y patchelf
+      - run:
+          name: "Build project"
+          command: ./build_with_nuitka.sh
+      - persist_to_workspace:
+          root: "."
+          paths:
+            - "dosh-cli-linux-*"
+
 jobs:
   lint:
     executor:
@@ -23,24 +39,22 @@ jobs:
 
     steps:
       - checkout
-
       - python/install-packages:
           pkg-manager: "poetry"
           args: "--no-ansi"
-
-      - run: poetry run pip install pre-commit
-
+      - run:
+          name: "Install pre-commit"
+          command: poetry run pip install pre-commit
       - run:
           name: "Create a temporary file for getting a cache key"
           command: |
             cp .pre-commit-config.yaml /tmp/checksum.txt
             poetry run python --version >> /tmp/checksum.txt
-
       - restore_cache:
           key: pre-commit-{{ checksum "/tmp/checksum.txt" }}
-
-      - run: poetry run pre-commit run --all-files
-
+      - run:
+          name: "Run pre-commit"
+          command: poetry run pre-commit run --all-files
       - save_cache:
           key: pre-commit-{{ checksum "/tmp/checksum.txt" }}
           paths:
@@ -52,50 +66,41 @@ jobs:
 
     steps:
       - checkout
-
       - run:
           name: "Check lua files"
           command: luacheck --globals=cmd --globals=env -- examples
 
-  build-on-linux:
-    executor:
-      name: "python/default"
-      tag: *python-tag
+  build-on-linux-x86_64:
+    docker:
+      - image: python:3.10-bullseye
 
     steps:
-      - checkout
+      - build-on-linux
 
-      - run:
-          name: "Install dependencies"
-          command: apt-get update && apt-get install -y patchelf
+  build-on-linux-arm64:
+    machine:
+      image: ubuntu-2204:current
 
-      - run:
-          name: "Build project"
-          command: ./build_with_nuitka.sh
+    resource_class: arm.medium
 
-      - persist_to_workspace:
-          root: "."
-          paths:
-            - "dosh-cli-linux-*"
+    steps:
+      - build-on-linux
 
   build-on-macos:
     macos:
-      xcode: 12.5.1
+      xcode: 14.2.0
 
     steps:
       - checkout
-
       - run:
           name: "Add symlinks for python and pip"
           command: |
             mkdir -p ~/.local/bin
             ln -s $(which python3) ~/.local/bin/python
             ln -s $(which pip3) ~/.local/bin/pip
-
       - run:
           name: "Build project"
           command: ./build_with_nuitka.sh
-
       - persist_to_workspace:
           root: "."
           paths:
@@ -108,11 +113,9 @@ jobs:
 
     steps:
       - checkout
-
       - run:
           name: "Build project"
           command: ./build_with_nuitka.sh
-
       - persist_to_workspace:
           root: "."
           paths:
@@ -125,12 +128,9 @@ jobs:
     steps:
       - attach_workspace:
           at: .
-
       - run:
           name: "Archive"
-          command: |
-            for i in dosh-cli-*/; do zip -r "${i%/}.zip" "$i" && rm -rf "$i"; done
-
+          command: for i in dosh-cli-*/; do zip -r "${i%/}.zip" "$i" && rm -rf "$i"; done
       - store_artifacts:
           path: .
 
@@ -139,10 +139,8 @@ workflows:
     jobs:
       - lint:
           filters: *filters-development
-
       - lint-lua:
           filters: *filters-development
-
       - python/test:
           pkg-manager: poetry
           test-tool: pytest
@@ -153,18 +151,18 @@ workflows:
 
   main:
     jobs:
-      - build-on-linux:
+      - build-on-linux-x86_64:
           filters: *filters-release
-
+      - build-on-linux-arm64:
+          filters: *filters-release
       - build-on-macos:
           filters: *filters-release
-
       - build-on-windows:
           filters: *filters-release
-
       - release:
           requires:
-            - build-on-linux
+            - build-on-linux-x86_64
+            - build-on-linux-arm64
             - build-on-macos
             - build-on-windows
           filters: *filters-release
