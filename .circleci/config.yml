@@ -15,17 +15,6 @@ aliases:
       branches:
         ignore: main
 
-commands:
-  add-symlinks-for-python:
-    steps:
-      - run:
-          name: "Add symlinks for python and pip"
-          command: |
-            mkdir -p ~/.local/bin
-            ln -s $(which python3) ~/.local/bin/python
-            ln -s $(which pip3) ~/.local/bin/pip
-            echo 'export PATH="$HOME/.local/bin:$PATH"' >> ~/.bashrc
-
 jobs:
   lint:
     executor:
@@ -77,12 +66,11 @@ jobs:
 
     steps:
       - checkout
-      - add-symlinks-for-python
       - run:
           name: "Install dependencies"
           command: |
             sudo apt-get update
-            sudo apt-get install -y patchelf
+            sudo apt-get install -y patchelf python3
       - run:
           name: "Build project"
           command: ./build_with_nuitka.sh
@@ -97,7 +85,6 @@ jobs:
 
     steps:
       - checkout
-      - add-symlinks-for-python
       - run:
           name: "Build project"
           command: ./build_with_nuitka.sh
