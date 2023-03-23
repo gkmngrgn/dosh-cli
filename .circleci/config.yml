@@ -56,27 +56,10 @@ jobs:
           name: "Check lua files"
           command: luacheck --globals=cmd --globals=env -- examples
 
-  test:
-    parameters:
-      version:
-        type: string
-
-    executor:
-      name: "python/default"
-      tag: << parameters.version >>
-
-    steps:
-      - checkout
-
-      - python/install-packages:
-          pkg-manager: "poetry"
-          args: "--no-ansi"
-
-      - run: poetry run pytest
-
   build-on-linux:
-    docker:
-      - image: python:3.9-bullseye
+    executor:
+      name: python/default
+      tag: 3.10
 
     steps:
       - checkout
@@ -159,7 +142,9 @@ workflows:
       - lint-lua:
           filters: *filters-development
 
-      - test:
+      - python/test:
+          pkg-manager: poetry
+          test-tool: pytest
           matrix:
             parameters:
               version: ["3.8", "3.9", "3.10", "3.11"]
