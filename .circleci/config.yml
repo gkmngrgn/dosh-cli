@@ -150,8 +150,6 @@ workflows:
             parameters:
               resource_class: ["medium", "arm.medium"]
           filters: *filters-release
-      - build-on-linux-arm64:
-          filters: *filters-release
       - build-on-macos:
           filters: *filters-release
       - build-on-windows:
