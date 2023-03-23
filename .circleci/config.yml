@@ -24,6 +24,8 @@ commands:
             mkdir -p ~/.local/bin
             ln -s $(which python3) ~/.local/bin/python
             ln -s $(which pip3) ~/.local/bin/pip
+            [ -f $(SHELL -c 'echo $BASH') ] && echo 'export PATH="$HOME/.local/bin:$PATH"' >> ~/.bashrc
+            [ -f $(SHELL -c 'echo $ZSH') ] && echo 'export PATH="$HOME/.local/bin:$PATH"' >> ~/.zshrc
 
 jobs:
   lint:
