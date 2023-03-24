@@ -1,6 +1,13 @@
 #!/bin/bash
 
 export PATH="$HOME/.local/bin:$HOME/bin:$PATH"
+
+if command -v pyenv &> /dev/null
+then
+    echo "pyenv found in path."
+    pyenv use system
+fi
+
 PY="$(command -v python3 || command -v python)"
 
 if command -v poetry &> /dev/null
@@ -30,7 +37,6 @@ poetry run python                  \
         --remove-output            \
         --assume-yes-for-downloads \
         --output-filename=dosh     \
-        --static-libpython=no      \
         dosh_cli
 [ -d "${DIR_NAME}" ] && rm -rf "${DIR_NAME}"
 mv dosh_cli.dist "${DIR_NAME}"

@@ -60,7 +60,7 @@ jobs:
         type: string
 
     machine:
-      image: ubuntu-2204:current
+      image: ubuntu-2004:current  # check python version before changing this
 
     resource_class: << parameters.resource_class >>
 
@@ -70,7 +70,7 @@ jobs:
           name: "Install dependencies"
           command: |
             sudo apt-get update
-            sudo apt-get install -y patchelf python3
+            sudo apt-get install -y patchelf
       - run:
           name: "Build project"
           command: ./build_with_nuitka.sh
@@ -81,7 +81,7 @@ jobs:
 
   build-on-macos:
     macos:
-      xcode: 14.2.0
+      xcode: 14.1.0  # check python version before changing this
 
     steps:
       - checkout
