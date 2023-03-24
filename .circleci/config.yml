@@ -60,7 +60,7 @@ jobs:
         type: string
 
     machine:
-      image: ubuntu-2004:current  # check python version before changing this
+      image: ubuntu-2204:current  # check python version before changing this
 
     resource_class: << parameters.resource_class >>
 
