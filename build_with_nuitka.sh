@@ -5,7 +5,7 @@ export PATH="$HOME/.local/bin:$HOME/bin:$PATH"
 if command -v pyenv &> /dev/null
 then
     echo "pyenv found in path."
-    pyenv use system
+    pyenv global system
 fi
 
 PY="$(command -v python3 || command -v python)"
