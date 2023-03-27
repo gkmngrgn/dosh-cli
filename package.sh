@@ -31,12 +31,6 @@ echo "DIRECTORY      : ${DIR_NAME}"
 echo "---"
 
 poetry install --no-ansi --no-interaction
-poetry run python                  \
-        -m nuitka                  \
-        --standalone               \
-        --remove-output            \
-        --assume-yes-for-downloads \
-        --output-filename=dosh     \
-        dosh_cli
+poetry run pyinstaller dosh_cli --name=dosh --console --noconfirm --clean
 [ -d "${DIR_NAME}" ] && rm -rf "${DIR_NAME}"
-mv dosh_cli.dist "${DIR_NAME}"
+mv dist "${DIR_NAME}"
