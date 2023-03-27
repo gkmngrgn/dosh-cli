@@ -31,6 +31,6 @@ echo "DIRECTORY      : ${DIR_NAME}"
 echo "---"
 
 poetry install --no-ansi --no-interaction
-poetry run pyinstaller dosh_cli --name=dosh --console --noconfirm --clean
+poetry run pyinstaller dosh_cli/__main__.py --name=dosh --console --noconfirm --clean
 [ -d "${DIR_NAME}" ] && rm -rf "${DIR_NAME}"
-mv dist "${DIR_NAME}"
+mv dist/dosh "${DIR_NAME}"
