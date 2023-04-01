@@ -4,26 +4,35 @@
 
 **DOSH-CLI** is a command-line interface of [**DOSH-CORE**](https://github.com/gkmngrgn/dosh-core) to run your tasks on any platform, on any shell. Define your tasks, aliases, environments in a `dosh.lua` file and run `dosh`. DOSH will work like a CLI app reading your config file.
 
-<img src="https://media.githubusercontent.com/media/gkmngrgn/dosh-core/main/dosh-logo.svg"
-     width="200"
-     alt="DOSH logo" />
-
+<img src="https://media.githubusercontent.com/media/gkmngrgn/dosh-core/main/dosh-logo.svg" width="200" alt="DOSH logo" />
 
 ## INSTALLATION
 
-**TODO:** This section is not ready yet.
+DOSH is a Python package so it's possible to install it with `pip` or `pipx` but there's also an installer script to install with just a command:
 
-On Linux/MacOS/WSL:
+### BASH
 
 ```shell
-sh <(curl https://raw.githubusercontent.com/gkmngrgn/dosh-installer/main/install.sh)
+sh <(curl https://raw.githubusercontent.com/gkmngrgn/dosh-cli/main/install.sh)
 ```
 
-On Windows:
+### POWERSHELL (NOT READY)
+
 ```powershell
-iwr -useb https://raw.githubusercontent.com/gkmngrgn/dosh-installer/main/install.ps1 | iex
+iwr -useb https://raw.githubusercontent.com/gkmngrgn/dosh-cli/main/install.ps1 | iex
 ```
 
+### PYTHON
+
+```shell
+pip install --user dosh-cli
+```
+
+Or if you have `pipx`:
+
+```shell
+pipx install dosh-cli
+```
 
 ## ANATOMY OF `dosh.lua`
 
@@ -54,7 +63,6 @@ DOSH => [RUN] osascript -e 'display notification "Hello, lua!" with title "Hi!"'
 ```
 
 Take a look at the [`examples`](./examples) folder to find ready-in-use config files.
-
 
 ## ENVIRONMENT VARIABLES
 
@@ -96,7 +104,6 @@ All the following variables will return `true` or `false` depending on the opera
 - `env.IS_MACOS`
 - `env.IS_WINDOWS`
 
-
 #### SHELL TYPE
 
 It's like OS type checking. It's useful if you use shell-specific package like `ohmyzsh`.
@@ -104,7 +111,6 @@ It's like OS type checking. It's useful if you use shell-specific package like `
 - `env.IS_BASH`
 - `env.IS_PWSH`
 - `env.IS_ZSH`
-
 
 #### DOSH-SPECIFIC ENVIRONMENTS
 
@@ -114,7 +120,6 @@ Consider you have some tasks that help you to test the project on your local and
 
 _Check out the file [`dosh_environments.lua`](./examples/dosh_environments.lua) for example usage._
 
-
 ## COMMANDS
 
 #### GENERAL PURPOSE
@@ -123,36 +128,37 @@ The main purpose of dosh to write one script that works on multiple operating sy
 
 _Check out the file [`dosh_greet.lua`](./examples/dosh_greet.lua) for example usage._
 
-
 #### FILE SYSTEM OPERATIONS
 
 There are some ready-made functions both to keep the code readable and to make it work the same in all operating systems. You know Windows prefers backslash as a path separator but with dosh, use always `/` as in `/foo/bar/baz`, let dosh to find the path in a common way.
 
 _Check out the file [`dosh_config.lua`](./examples/dosh_config.lua) for example usage._
 
-
 #### PACKAGE MANAGERS
 
 There are many package managers and I'm not sure if we need to implement all of them. But at least dosh supports these three of them mostly:
 
 - `cmd.brew_install` (for MacOS and Linux)
+
 - `packages`: list of strings, required.
+
 - `cask`: boolean, default is `false`.
+
 - `taps`: list of strings, optional.
 
 - `cmd.apt_install` (for Debian based Linux distros)
+
 - `packages`: list of strings, required.
 
 - `cmd.winget_install` (for Windows)
+
 - `packages`: list of strings, required.
 
 _Check out the file [`dosh_config.lua`](./examples/dosh_config.lua) for example usage._
 
-
 #### FILE, FOLDER, COMMAND EXISTENCY
 
 To check if file or folder exists, use `cmd.exists`. And if you want to check if a command exists, use `cmd.exists_command`.
-
 
 #### LOGGING
 
@@ -167,18 +173,15 @@ For more information about the verbosity parameter of dosh, type `dosh help`.
 
 _Check out the file [`dosh_greet.lua`](./examples/dosh_greet.lua) for example usage._
 
-
 ## QUESTIONS
 
 ### CAN I TRUST THIS PROJECT?
 
 No. Don't trust any project. The source code is open, trust yourself and read the code.
 
-
 ### BUT DO YOU USE THIS PROJECT YOURSELF?
 
 Yes, of course. I use multiple operating systems with different shells, and I'm too tired to write my scripts in multiple languages. This is why I created this project.
-
 
 ### BUT YOU COULD USE MAKEFILE, CMAKE, OR ANOTHER SIMILAR TOOL.
 
@@ -190,16 +193,13 @@ They are typically used to build and package software for distribution and are m
 
 - If I need a command alias but also need to run the command in Windows and Mac OS X, or in powershell and zsh, DOSH makes it simple.
 
-
 ### WHY DOESN'T THIS PROJECT HAVE `DOSH.LUA`?
 
 Because there's `pyproject.toml` and I use `poetry`. The other reason is that I don't want to create a circular dependency.
 
-
 ### WHY DOESN'T DOSH HAVE ANY REMOVE COMMAND?
 
 Because it's too dangerous! I don't use any remove command in my scripts indeed. If you really need a remove command, you can run it with `cmd.run`. But remember, contributors of this project don't guarantee anything.
-
 
 ## CONTRIBUTION
 
