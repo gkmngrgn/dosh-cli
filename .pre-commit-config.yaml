@@ -20,6 +20,14 @@ repos:
     hooks:
       - id: shellcheck
 
+  - repo: https://github.com/executablebooks/mdformat
+    rev: "0.7.16"
+    hooks:
+    - id: mdformat
+      additional_dependencies:
+      - mdformat-gfm
+      - mdformat-black
+
   - repo: https://github.com/pycqa/pydocstyle
     rev: "6.3.0"
     hooks:
