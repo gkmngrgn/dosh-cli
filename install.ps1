@@ -1,34 +1,26 @@
-function Get-Architecture {
-    $processArchitecture = [System.Runtime.InteropServices.RuntimeInformation]::ProcessArchitecture
-    $architecture = if ($processArchitecture -eq "X64") {
-        "x86_64"
-    } elseif ($processArchitecture -eq "Arm64") {
-        "aarch64"
-    } else {
-        "unknown"
-    }
-    return $architecture
-}
-
-function Get-OperatingSystem {
-    $os = if ($IsWindows) {
-        "windows"
-    } elseif ($IsMacOS) {
-        "darwin"
-    } elseif ($IsLinux) {
-        "linux"
-    } else {
-        "unknown"
-    }
-    return $os
+function InstallWithShScript {
+    $argList = '-c "curl https://raw.githubusercontent.com/gkmngrgn/dosh-cli/main/install.sh | sh"'
+    Start-Process -FilePath "bash" -ArgumentList $argList -Wait
 }
 
 function Main {
-    $os = Get-OperatingSystem
-    $architecture = Get-Architecture
+    if (!$IsWindows) {
+        Write-Output ""
+        Write-Output "This script supports only Windows. Fetching `install.sh` from GitHub..."
+        Write-Output "If you want to install DOSH CLI on Linux, macOS or other operating systems, please use the `install.sh` script."
+        Write-Output ""
 
-    Write-Output "Operating System: $os"
-    Write-Output "Architecture: $architecture"
+        InstallWithShScript
+        return
+    }
+
+    $architecture = [System.Runtime.InteropServices.RuntimeInformation]::ProcessArchitecture
+
+    if ($architecture -ne "X64") {
+        Write-Error "This script only supports x64 for now."
+        return
+    }
+
     Write-Output "DOSH CLI version: $tag"
     Write-Output "Temporary directory: $temp_dir"
     Write-Output "Download URL: $download_url"
