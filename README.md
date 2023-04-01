@@ -8,7 +8,7 @@
 
 ## INSTALLATION
 
-DOSH is a Python package so it's possible to install it with `pip` or `pipx` but there's also an installer script to install with just a command:
+It's possible to install DOSH using Python package manager but there's also an installer script to install with just a command:
 
 ### BASH
 
@@ -16,7 +16,7 @@ DOSH is a Python package so it's possible to install it with `pip` or `pipx` but
 sh <(curl https://raw.githubusercontent.com/gkmngrgn/dosh-cli/main/install.sh)
 ```
 
-### POWERSHELL (NOT READY)
+### POWERSHELL
 
 ```powershell
 iwr -useb https://raw.githubusercontent.com/gkmngrgn/dosh-cli/main/install.ps1 | iex
