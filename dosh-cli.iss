@@ -2,7 +2,7 @@
 ; SEE THE DOCUMENTATION FOR DETAILS ON CREATING INNO SETUP SCRIPT FILES!
 
 #define MyAppName "dosh-cli"
-#define MyAppVersion "0.1.0"
+#define MyAppVersion "0.1.3"
 #define MyAppPublisher "GoeDev"
 #define MyAppURL "https://github.com/gkmngrgn/dosh-cli"
 #define MyAppExeName "dosh.exe"
@@ -24,7 +24,7 @@ LicenseFile=LICENSE.md
 ; Remove the following line to run in administrative install mode (install for all users.)
 PrivilegesRequired=lowest
 PrivilegesRequiredOverridesAllowed=dialog
-OutputBaseFilename=dosh-cli
+OutputBaseFilename={#MyAppName}-windows-amd64-{#MyAppVersion}-installer
 Compression=lzma
 SolidCompression=yes
 WizardStyle=modern
@@ -33,8 +33,8 @@ WizardStyle=modern
 Name: "english"; MessagesFile: "compiler:Default.isl"
 
 [Files]
-Source: "dosh-cli\{#MyAppExeName}"; DestDir: "{app}"
-Source: "dosh-cli\*"; DestDir: "{app}"; Flags: recursesubdirs createallsubdirs
+Source: "{#MyAppName}-windows-amd64-{#MyAppVersion}\{#MyAppExeName}"; DestDir: "{app}"
+Source: "{#MyAppName}-windows-amd64-{#MyAppVersion}\*"; DestDir: "{app}"; Flags: recursesubdirs createallsubdirs
 ; NOTE: Don't use "Flags: ignoreversion" on any shared system files
 
 [Icons]
