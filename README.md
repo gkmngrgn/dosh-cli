@@ -16,11 +16,9 @@ It's possible to install DOSH using Python package manager but there's also an i
 sh <(curl https://raw.githubusercontent.com/gkmngrgn/dosh-cli/main/install.sh)
 ```
 
-### POWERSHELL
+### WINDOWS
 
-```powershell
-iwr -useb https://raw.githubusercontent.com/gkmngrgn/dosh-cli/main/install.ps1 | iex
-```
+Download the installer (`dosh-cli-windows-amd64-VERSION-installer.zip`) from [GitHub Release](https://github.com/gkmngrgn/dosh-cli/releases/latest).
 
 ### PYTHON
 

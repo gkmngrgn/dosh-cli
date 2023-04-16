@@ -2,6 +2,7 @@ dosh.lua
 /main.*
 /dosh-cli-*
 /dosh_cli.*
+/Output
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

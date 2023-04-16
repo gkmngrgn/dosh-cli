@@ -1,4 +1,5 @@
 #!/bin/bash
+set -e
 
 export PATH="$HOME/.local/bin:$HOME/bin:$PATH"
 

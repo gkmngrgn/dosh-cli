@@ -1,4 +1,5 @@
 #!/bin/sh
+set -e
 
 get_latest_tag() {
     curl -s https://api.github.com/repos/gkmngrgn/dosh-cli/tags \
