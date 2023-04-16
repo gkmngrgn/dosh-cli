@@ -8,9 +8,20 @@
 
 ## INSTALLATION
 
-It's possible to install DOSH using Python package manager but there's also an installer script to install with just a command:
+We have many ways to install DOSH CLI. You can prefer to install it using the Python package manager, or you can use the installer script for Linux and MacOS, or if you are a Windows user, you can download the Windows installer.
 
-### BASH
+Currently, our CircleCI builds app for these operating systems:
+
+- Linux (aarch64, x86_64)
+- MacOS (x86_64)
+- Windows (amd64)
+
+Also we build these targets manually:
+
+- MacOS (arm64) using `package.sh`
+- Windows Installer (amd64) using `package_for_windows.sh`
+
+### BASH (for Linux, MacOS)
 
 ```shell
 sh <(curl https://raw.githubusercontent.com/gkmngrgn/dosh-cli/main/install.sh)
