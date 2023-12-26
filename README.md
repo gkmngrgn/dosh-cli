@@ -4,7 +4,9 @@
 
 **DOSH-CLI** is a command-line interface of [**DOSH-CORE**](https://github.com/gkmngrgn/dosh-core) to run your tasks on any platform, on any shell. Define your tasks, aliases, environments in a `dosh.lua` file and run `dosh`. DOSH will work like a CLI app reading your config file.
 
-<img src="https://media.githubusercontent.com/media/gkmngrgn/dosh-core/main/dosh-logo.svg" width="200" alt="DOSH logo" />
+<img src="https://raw.githubusercontent.com/gkmngrgn/dosh-core/main/dosh-logo.svg"
+     width="200"
+     alt="DOSH logo" />
 
 ## INSTALLATION
 

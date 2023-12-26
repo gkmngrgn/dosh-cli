@@ -16,9 +16,11 @@ then
     echo "poetry found in path."
 else
     $PY -m pip install --user pipx
+    $PY -m pipx ensurepath
     $PY -m pipx install poetry
 fi
 
+PY="$(poetry run command -v python)"
 OS_NAME=$($PY -c 'import platform; print(platform.system().lower())')
 ARCH_TYPE=$($PY -c 'import platform; print(platform.machine().lower())')
 PY_VERSION=$($PY -c 'import sys; print(".".join(map(str, sys.version_info[:3])))')
@@ -32,6 +34,12 @@ echo "DIRECTORY      : ${DIR_NAME}"
 echo "---"
 
 poetry install --no-ansi --no-interaction
-poetry run pyinstaller dosh_cli/__main__.py --name=dosh --copy-metadata=dosh-core --console --noconfirm --clean
+poetry run pyinstaller dosh_cli/__main__.py \
+    --name=dosh \
+    --copy-metadata=dosh-core \
+    --console \
+    --noconfirm \
+    --clean \
+    --additional-hooks-dir=pyinstaller_hooks
 [ -d "${DIR_NAME}" ] && rm -rf "${DIR_NAME}"
 mv dist/dosh "${DIR_NAME}"
