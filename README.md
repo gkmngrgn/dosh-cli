@@ -29,6 +29,12 @@ Also we build these targets manually:
 sh <(curl https://raw.githubusercontent.com/gkmngrgn/dosh-cli/main/install.sh)
 ```
 
+### NIX
+
+```shell
+nix-build -E 'with import <nixpkgs> {}; callPackage ./default.nix {}'
+```
+
 ### WINDOWS
 
 Download the installer (`dosh-cli-windows-amd64-VERSION-installer.zip`) from [GitHub Release](https://github.com/gkmngrgn/dosh-cli/releases/latest).
