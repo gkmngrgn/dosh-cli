@@ -16,8 +16,9 @@ main() {
     folder_name="dosh-cli-$os-$architecture-$tag"
     download_url="https://github.com/gkmngrgn/dosh-cli/releases/download/v$tag/$folder_name.zip"
     temp_dir=$(mktemp -d)
-    app_dir="$HOME/.local/share/dosh-cli"
-    bin_file="$HOME/.local/bin/dosh"
+    local_dir="$HOME/.local"
+    app_dir="$local_dir/share/dosh-cli"
+    bin_file="$local_dir/bin/dosh"
 
     echo "Operating System: $os"
     echo "Architecture: $architecture"
@@ -31,10 +32,16 @@ main() {
     printf "\nSTEP 2: Installing DOSH CLI...\n"
     if [ -d "$app_dir" ]; then
         mv "$app_dir" "$temp_dir/dosh-cli.old"
+    else
+        # make sure if local share folder exists
+        mkdir -p "$local_dir/share"
     fi
 
     if [ -f "$bin_file" ]; then
         mv "$bin_file" "$temp_dir/dosh.old"
+    else
+        # make sure if local bin folder exists
+        mkdir -p "$local_dir/bin"
     fi
 
     unzip "$temp_dir/dosh-cli.zip" -d "$temp_dir"
@@ -43,7 +50,8 @@ main() {
     printf '#!/bin/sh\neval "~/.local/share/dosh-cli/dosh $@"\n' > "$bin_file"
     chmod +x "$bin_file"
 
-    printf "\nSTEP 3: Done! You can delete the temporary directory if you want.\n"
+    printf "\nSTEP 3: Done! You can delete the temporary directory if you want:"
+    printf "\n$temp_dir\n"
 }
 
 main
