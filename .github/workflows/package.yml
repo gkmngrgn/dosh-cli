@@ -49,3 +49,36 @@ jobs:
         with:
           name: dosh-cli-artifact
           path: dosh-cli-*
+
+  build-on-macos:
+    needs: pre-checks
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up Python
+        uses: actions/setup-python@v3
+        with:
+          python-version: "3.12"
+      - name: Package DOSH CLI for Linux
+        run: ./package.sh
+      - name: Archive package
+        uses: actions/upload-artifact@v4
+        with:
+          name: dosh-cli-artifact
+          path: dosh-cli-*
+
+  build-on-windows:
+    needs: pre-checks
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up Python
+        uses: actions/setup-python@v3
+        with:
+          python-version: "3.12"
+      - name: Package DOSH CLI for Linux
+        run: ./package.sh
+      - name: Archive package
+        uses: actions/upload-artifact@v4
+        with:
+          name: dosh-cli-artifact

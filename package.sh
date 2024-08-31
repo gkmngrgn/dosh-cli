@@ -3,15 +3,15 @@ set -e
 
 export PATH="$HOME/.local/bin:$HOME/bin:$PATH"
 
-if which pyenv &> /dev/null
+if command -v pyenv &> /dev/null
 then
     echo "pyenv found in path."
     pyenv global system
 fi
 
-PY="$(which python3 || which python)"
+PY="$(command -v python3 || command -v python)"
 
-if which poetry &> /dev/null
+if command -v poetry &> /dev/null
 then
     echo "poetry found in path."
 else
@@ -20,7 +20,7 @@ else
     $PY -m pipx install poetry
 fi
 
-PY="$(poetry run which python)"
+PY="$(poetry run command -v python)"
 OS_NAME=$($PY -c 'import platform; print(platform.system().lower())')
 ARCH_TYPE=$($PY -c 'import platform; print(platform.machine().lower())')
 PY_VERSION=$($PY -c 'import sys; print(".".join(map(str, sys.version_info[:3])))')
