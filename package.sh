@@ -33,7 +33,7 @@ echo "PYTHON VERSION : ${PY_VERSION}"
 echo "DIRECTORY      : ${DIR_NAME}"
 echo "---"
 
-poetry install --no-ansi --no-interaction
+poetry install --no-ansi --no-interaction --only=main,package
 poetry run pyinstaller dosh_cli/__main__.py \
     --name=dosh \
     --copy-metadata=dosh-core \

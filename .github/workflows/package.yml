@@ -15,35 +15,27 @@ jobs:
 
     steps:
       - uses: actions/checkout@v4
-      - name: Set up Python 3.12
+      - name: Set up Python
         uses: actions/setup-python@v3
         with:
           python-version: "3.12"
       - name: Setup Poetry
         uses: Gr1N/setup-poetry@v9
       - name: Install dependencies
-        run: |
-          poetry install
+        run: poetry install
       - name: Run pre-commit
         uses: pre-commit/action@v3.0.1
       - name: Test with pytest
-        run: |
-          poetry run pytest
+        run: poetry run pytest
 
   build-on-linux:
     needs: pre-checks
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Set up Python 3.12
+      - name: Set up Python
         uses: actions/setup-python@v3
         with:
           python-version: "3.12"
-      - name: Setup Poetry
-        uses: Gr1N/setup-poetry@v9
-      - name: Install dependencies
-        run: |
-          poetry install --only=main,package
-      - name: Build package
-        run: |
-          ./package.sh
+      - name: Package DOSH CLI for Linux
+        run: ./package.sh
