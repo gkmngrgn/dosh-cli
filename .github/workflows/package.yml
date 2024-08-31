@@ -12,7 +12,6 @@ permissions:
 jobs:
   pre-checks:
     runs-on: ubuntu-latest
-
     steps:
       - uses: actions/checkout@v4
       - name: Set up Python
@@ -47,7 +46,7 @@ jobs:
       - name: Archive package
         uses: actions/upload-artifact@v4
         with:
-          name: dosh-cli-artifact
+          name: dosh-cli-linux
           path: dosh-cli-*
 
   build-on-macos:
@@ -64,7 +63,7 @@ jobs:
       - name: Archive package
         uses: actions/upload-artifact@v4
         with:
-          name: dosh-cli-artifact
+          name: dosh-cli-macos
           path: dosh-cli-*
 
   build-on-windows:
@@ -78,7 +77,9 @@ jobs:
           python-version: "3.12"
       - name: Package DOSH CLI for Linux
         run: ./package.sh
+        shell: bash
       - name: Archive package
         uses: actions/upload-artifact@v4
         with:
-          name: dosh-cli-artifact
+          name: dosh-cli-windows
+          path: dosh-cli-*
