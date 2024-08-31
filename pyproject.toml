@@ -27,6 +27,8 @@ dosh-core = "^0.3.0"
 [tool.poetry.group.dev.dependencies]
 pytest = "^7.4.3"
 pytest-cov = "^4.1.0"
+
+[tool.poetry.group.package.dependencies]
 pyinstaller = "^6.3.0"
 
 [tool.poe.tasks.lint]
