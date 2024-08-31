@@ -28,4 +28,4 @@ jobs:
         uses: pre-commit/action@v3.0.1
       - name: Test with pytest
         run: |
-          pytest
+          poetry run pytest
