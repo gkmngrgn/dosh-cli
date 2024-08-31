@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "dosh-cli"
-version = "0.1.3"
+version = "0.1.4"
 description = "Command line interface of DOSH, a tool for managing your tasks."
 authors = ["Gökmen Görgen <gkmngrgn@gmail.com>"]
 readme = "README.md"
@@ -21,7 +21,7 @@ classifiers = [
 dosh = "dosh_cli.cli:run_cli"
 
 [tool.poetry.dependencies]
-python = ">=3.9,<3.12"
+python = ">=3.9,<3.13"
 dosh-core = "^0.3.0"
 
 [tool.poetry.group.dev.dependencies]

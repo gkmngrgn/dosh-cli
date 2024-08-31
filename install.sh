@@ -51,7 +51,7 @@ main() {
     chmod +x "$bin_file"
 
     printf "\nSTEP 3: Done! You can delete the temporary directory if you want:"
-    printf "\n$temp_dir\n"
+    printf "\n%s\n" "$temp_dir"
 }
 
 main

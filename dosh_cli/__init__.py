@@ -1,4 +1,5 @@
 """DOSH CLI app."""
+
 import importlib.metadata
 
 try:
