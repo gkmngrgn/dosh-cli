@@ -10,7 +10,7 @@ permissions:
   contents: read
 
 jobs:
-  build:
+  pre-checks:
     runs-on: ubuntu-latest
 
     steps:
@@ -24,8 +24,26 @@ jobs:
       - name: Install dependencies
         run: |
           poetry install
-      - name: pre-commit
+      - name: Run pre-commit
         uses: pre-commit/action@v3.0.1
       - name: Test with pytest
         run: |
           poetry run pytest
+
+  build-on-linux:
+    needs: pre-checks
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up Python 3.12
+        uses: actions/setup-python@v3
+        with:
+          python-version: "3.12"
+      - name: Setup Poetry
+        uses: Gr1N/setup-poetry@v9
+      - name: Install dependencies
+        run: |
+          poetry install --only=main,package
+      - name: Build package
+        run: |
+          ./package.sh
