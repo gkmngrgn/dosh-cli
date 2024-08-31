@@ -18,6 +18,7 @@ main() {
     temp_dir=$(mktemp -d)
     local_dir="$HOME/.local"
     app_dir="$local_dir/share/dosh-cli"
+    app_exec="$app_dir/dosh"
     bin_file="$local_dir/bin/dosh"
 
     echo "Operating System: $os"
@@ -47,8 +48,9 @@ main() {
     unzip "$temp_dir/dosh-cli.zip" -d "$temp_dir"
     mv "$temp_dir/$folder_name" "$app_dir"
 
-    printf '#!/bin/sh\neval "~/.local/share/dosh-cli/dosh $@"\n' > "$bin_file"
+    printf '#!/bin/sh\neval "%s $@"\n' "$app_exec" > "$bin_file"
     chmod +x "$bin_file"
+    chmod +x "$app_exec"
 
     printf "\nSTEP 3: Done! You can delete the temporary directory if you want:"
     printf "\n%s\n" "$temp_dir"
