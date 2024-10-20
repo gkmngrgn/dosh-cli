@@ -1,4 +1,4 @@
-# DOSH-CLI - shell-independent task manager (CLI)
+# DOSH - shell-independent task manager (CLI)
 
 **STATUS: Archived.** I started to rewrite this project in Go. You can find the new project [here](https://github.com/gkmngrgn/dosh).
 
