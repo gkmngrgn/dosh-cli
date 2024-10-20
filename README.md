@@ -1,6 +1,8 @@
 # DOSH-CLI - shell-independent task manager (CLI)
 
-[![CircleCI](https://dl.circleci.com/status-badge/img/gh/gkmngrgn/dosh-cli/tree/main.svg?style=svg)](https://dl.circleci.com/status-badge/redirect/gh/gkmngrgn/dosh-cli/tree/main)
+**STATUS: Archived.** I started to rewrite this project in Go. You can find the new project [here](https://github.com/gkmngrgn/dosh).
+
+---
 
 **DOSH-CLI** is a command-line interface of [**DOSH-CORE**](https://github.com/gkmngrgn/dosh-core) to run your tasks on any platform, on any shell. Define your tasks, aliases, environments in a `dosh.lua` file and run `dosh`. DOSH will work like a CLI app reading your config file.
 
